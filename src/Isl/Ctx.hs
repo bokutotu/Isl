@@ -1,5 +1,5 @@
 module Isl.Ctx
-  ( IslCtx
+  ( IslCtx(..)
   , initIslCtx
   ) where
 
@@ -9,9 +9,13 @@ import System.IO.Unsafe (unsafePerformIO)
 
 newtype IslCtx = Wrap Raw.IslCtx
 
-initIslCtx :: Maybe IslCtx
-initIslCtx = unsafePerformIO $ do
+initIslCtxIO :: IO (Maybe IslCtx)
+initIslCtxIO = do
   rawCtx@(Raw.IslCtx rawPtr) <- Raw.islCtxAlloc
   if rawPtr == nullPtr
     then return Nothing
     else return (Just (Wrap rawCtx))
+
+initIslCtx :: Maybe IslCtx
+initIslCtx = unsafePerformIO initIslCtxIO
+{-# NOINLINE initIslCtx #-}

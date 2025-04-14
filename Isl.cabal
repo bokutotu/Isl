@@ -19,9 +19,11 @@ common warnings
 library
     import:                 warnings
     exposed-modules:
-        Isl.Ctx
+          Isl.Ctx
+        , Isl.Set
     other-modules:
-        Foreign.Isl.Ctx
+          Foreign.Isl.Ctx
+        , Foreign.Isl.Set
     -- other-extensions:
     build-tool-depends:     hsc2hs:hsc2hs
     build-depends:          base ^>=4.19.1.0
