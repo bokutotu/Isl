@@ -18,8 +18,13 @@ common warnings
 
 library
     import:                 warnings
-    exposed-modules:        Isl
-    other-modules:          Foreign.Isl.Ctx
+    exposed-modules:
+        Isl
+      , Isl.Ctx
+        -- Expose the safe wrapper
+    other-modules:
+        Foreign.Isl.Ctx
+        -- Hide the raw bindings
     -- other-extensions:
     build-depends:          base ^>=4.19.1.0
     hs-source-dirs:         src
