@@ -1,6 +1,1 @@
-[submodule "isl"]
-	path = isl
-	url = git://repo.or.cz/isl.git
-[submodule "3rdparty/isl"]
-	path = 3rdparty/isl
-	url = git@github.com:bokutotu/isl.git
+
