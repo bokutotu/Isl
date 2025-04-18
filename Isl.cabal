@@ -1,4 +1,4 @@
-cabal-version:      3.14
+cabal-version:      3.0
 name:               Isl
 version:            0.0.0.1
 -- synopsis:
@@ -26,19 +26,18 @@ library
         , Foreign.Isl.Set
     -- other-extensions:
     build-tool-depends:     hsc2hs:hsc2hs
-    build-depends:          base ^>=4.19.1.0
+    build-depends:          base >=4.18 && <4.21
     hs-source-dirs:         src
-    default-language:       Haskell2010
+    default-language:       GHC2024
     pkgconfig-depends:      isl >=0.27
 
 test-suite Isl-test
     import:           warnings
-    default-language: Haskell2010
+    default-language: GHC2024
     -- other-modules:
     -- other-extensions:
     type:             exitcode-stdio-1.0
     hs-source-dirs:   test
     main-is:          Main.hs
-    build-depends:
-        base ^>=4.19.1.0,
-        Isl
+    build-depends:    base >=4.18 && <4.21
+                      , Isl
