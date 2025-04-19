@@ -1,5 +1,5 @@
 {
-  description = "Haskell + ISL (FFI) demo — isl is built from upstream Git HEAD";
+  description = "ISL Bindings for Haskell";
 
   inputs = {
     nixpkgs.url       = "github:NixOS/nixpkgs/a295a09efb6ea441df2244727f44cb6434d33aaa";
