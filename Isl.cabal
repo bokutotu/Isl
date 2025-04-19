@@ -18,16 +18,14 @@ common warnings
 
 library
     import:                 warnings
-    exposed-modules:
-          Isl.Ctx
-        , Isl.Set
-        , Isl.Id
-    other-modules:
-          Foreign.Isl.Ctx
-        , Foreign.Isl.Set
-        , Foreign.Isl.Id
+    exposed-modules:        Isl.Ctx
+        
+
+    other-modules:          Foreign.Isl.Ctx
+                          , Foreign.Isl.Id
+                          , Foreign.Isl.Set
     -- other-extensions:
-    build-tool-depends:     hsc2hs:hsc2hs
+    build-tool-depends:     c2hs:c2hs
     build-depends:          base >=4.18 && <4.21
     hs-source-dirs:         src
     default-language:       GHC2024
