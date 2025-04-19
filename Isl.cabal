@@ -24,6 +24,7 @@ library
     other-modules:          Foreign.Isl.Ctx
                           , Foreign.Isl.Id
                           , Foreign.Isl.Set
+                          , Foreign.Isl.Val
     -- other-extensions:
     build-tool-depends:     c2hs:c2hs
     build-depends:          base >=4.18 && <4.21
