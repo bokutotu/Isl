@@ -2,21 +2,22 @@
   description = "ISL Bindings for Haskell";
 
   inputs = {
-    nixpkgs.url       = "github:NixOS/nixpkgs/a295a09efb6ea441df2244727f44cb6434d33aaa";
-
-    isl-src.url       = "git+https://repo.or.cz/isl.git?submodules=1";
-    isl-src.flake     = false;
-
+    haskellNix.url    = "github:input-output-hk/haskell.nix";
+    nixpkgs.follows   = "haskellNix/nixpkgs-unstable";
+    isl-src = {
+      url = "git+https://repo.or.cz/isl.git?ref=refs/tags/isl-0.27&submodules=1";
+      flake = false;
+    };
     flake-utils.url   = "github:numtide/flake-utils";
   };
 
-   outputs = { self, nixpkgs, isl-src, flake-utils }:
+  outputs = { self, nixpkgs, haskellNix, isl-src, flake-utils }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         islOverlay = (final: prev: {
           isl = prev.stdenv.mkDerivation rec {
             pname   = "isl";
-            version = "git-${builtins.substring 0 7 isl-src.rev}";
+            version = "0.27";
 
             src = isl-src;
 
@@ -36,7 +37,7 @@
             doCheck = false;
 
             meta = prev.isl.meta // {
-              description = "Integer Set Library (built from upstream git HEAD)";
+              description = "Integer Set Library (version 0.27)";
               homepage    = "https://repo.or.cz/isl.git";
             };
           };
@@ -44,39 +45,32 @@
 
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [ islOverlay ];
+          overlays = [ haskellNix.overlay islOverlay ];
+          inherit (haskellNix) config;
         };
 
-        ghcVersion      = "ghc910";
-        haskellPackages = pkgs.haskell.packages.${ghcVersion};
-
-        projectNativeDeps = with pkgs; [
-          pkg-config
-          isl
-        ];
-
-        projectPackage =
-          haskellPackages.callCabal2nix "Isl" ./. { };
-
-      in
-      {
-        packages.default = projectPackage;
-
-        devShells.default = haskellPackages.shellFor {
-          packages = p: [ projectPackage ];
-
-          buildInputs =
-            projectNativeDeps
-            ++ (with haskellPackages; [
-              cabal-install
-              haskell-language-server
-            ])
-            ++ (with pkgs; [ git ]);
-
-          shellHook = ''
-            echo "🕊  Dev shell with upstream isl ready."
-          '';
+        project = pkgs.haskell-nix.project' {
+          src = ./.;
+          compiler-nix-name = "ghc9101";
+          shell = {
+            tools = {
+              cabal = {};
+              haskell-language-server = {};
+              hlint = {};
+              ormolu = {};
+            };
+            buildInputs = with pkgs; [
+              pkg-config
+              isl
+              gmp
+            ];
+          };
         };
+
+      in {
+        packages.default = project.flake.packages."Isl:lib:Isl" or null;
+
+        devShells.default = project.shell;
       });
 }
 

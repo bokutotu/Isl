@@ -1,4 +1,4 @@
-cabal-version:      3.0
+cabal-version:      3.14
 name:               Isl
 version:            0.0.0.1
 -- synopsis:
@@ -24,9 +24,9 @@ library
     other-modules:          Foreign.Isl.Ctx
                           , Foreign.Isl.Id
                           , Foreign.Isl.Set
+                          , Foreign.Isl.Space
                           , Foreign.Isl.Val
     -- other-extensions:
-    build-tool-depends:     c2hs:c2hs
     build-depends:          base >=4.18 && <4.21
     hs-source-dirs:         src
     default-language:       GHC2024
