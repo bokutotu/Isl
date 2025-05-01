@@ -1,5 +1,5 @@
 module Isl.Ctx
-  ( Ctx
+  ( Ctx(..)
   , newCtx
   , getMaxOperations
   , setMaxOperations
