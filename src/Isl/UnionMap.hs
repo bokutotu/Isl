@@ -1,5 +1,5 @@
 module Isl.UnionMap
-  ( UnionMap
+  ( UnionMap(..)
   , readFromStr
   , applyRange
   , reverse
