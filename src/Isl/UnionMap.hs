@@ -3,6 +3,7 @@ module Isl.UnionMap
   , readFromStr
   , applyRange
   , reverse
+  , lexLtUnionMap
   ) where
 
 import Foreign.Isl.UnionMap
@@ -27,4 +28,9 @@ applyRange (UnionMap ptr1) (UnionMap ptr2) =
 -- | Reverse a union map
 reverse :: UnionMap -> Maybe UnionMap
 reverse (UnionMap ptr) = 
-  Just $ UnionMap $ unsafePerformIO $ islUnionMapReverse ptr 
+  Just $ UnionMap $ unsafePerformIO $ islUnionMapReverse ptr
+
+-- | Lexicographically less-than between two union maps
+lexLtUnionMap :: UnionMap -> UnionMap -> Maybe UnionMap
+lexLtUnionMap (UnionMap ptr1) (UnionMap ptr2) =
+  Just $ UnionMap $ unsafePerformIO $ islUnionMapLexLtUnionMap ptr1 ptr2 

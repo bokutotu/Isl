@@ -1,6 +1,6 @@
 module Isl.Schedule
-  ( ScheduleConstraints
-  , Schedule
+  ( ScheduleConstraints(..)
+  , Schedule(..)
   , constraintsOnDomain
   , setValidity
   , computeSchedule

@@ -1,7 +1,9 @@
 module Isl.Map
-  ( Map
+  ( Map(..)
   , readFromStr
   , reverse
+  , lexMin
+  , lexMax
   ) where
 
 import Foreign.Isl.Map
@@ -21,4 +23,14 @@ readFromStr (Ctx ctx) str =
 -- | Reverse a map
 reverse :: Map -> Maybe Map
 reverse (Map ptr) = 
-  Just $ Map $ unsafePerformIO $ islMapReverse ptr 
+  Just $ Map $ unsafePerformIO $ islMapReverse ptr
+
+-- | Lexicographic minimum
+lexMin :: Map -> Maybe Map
+lexMin (Map ptr) =
+  Just $ Map $ unsafePerformIO $ islMapLexMin ptr
+
+-- | Lexicographic maximum
+lexMax :: Map -> Maybe Map
+lexMax (Map ptr) =
+  Just $ Map $ unsafePerformIO $ islMapLexMax ptr 

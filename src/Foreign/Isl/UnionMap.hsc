@@ -8,6 +8,7 @@ module Foreign.Isl.UnionMap
   , islUnionMapReadFromStr
   , islUnionMapApplyRange
   , islUnionMapReverse
+  , islUnionMapLexLtUnionMap
   ) where
 
 import Foreign.Ptr
@@ -35,6 +36,10 @@ foreign import capi "isl/union_map.h isl_union_map_apply_range" c_isl_union_map_
 foreign import capi "isl/union_map.h isl_union_map_reverse" c_isl_union_map_reverse
   :: IslUnionMapPtr -> IO IslUnionMapPtr
 
+-- | Lexicographically less-than between two union maps
+foreign import capi "isl/union_map.h isl_union_map_lex_lt_union_map" c_isl_union_map_lex_lt_union_map
+  :: IslUnionMapPtr -> IslUnionMapPtr -> IO IslUnionMapPtr
+
 -- Haskell wrappers
 islUnionMapReadFromStr :: IslCtxPtr -> String -> IO IslUnionMapPtr
 islUnionMapReadFromStr ctx str = withCString str $ \cstr ->
@@ -44,4 +49,7 @@ islUnionMapApplyRange :: IslUnionMapPtr -> IslUnionMapPtr -> IO IslUnionMapPtr
 islUnionMapApplyRange = c_isl_union_map_apply_range
 
 islUnionMapReverse :: IslUnionMapPtr -> IO IslUnionMapPtr
-islUnionMapReverse = c_isl_union_map_reverse 
+islUnionMapReverse = c_isl_union_map_reverse
+
+islUnionMapLexLtUnionMap :: IslUnionMapPtr -> IslUnionMapPtr -> IO IslUnionMapPtr
+islUnionMapLexLtUnionMap = c_isl_union_map_lex_lt_union_map 

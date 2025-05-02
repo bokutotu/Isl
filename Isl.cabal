@@ -25,6 +25,7 @@ library
                          , Isl.UnionMap
                          , Isl.Flow
                          , Isl.Schedule
+                         , Isl.AstBuild
     other-modules:          Foreign.Isl.Ctx
                          , Foreign.Isl.Set
                          , Foreign.Isl.UnionSet
@@ -32,6 +33,7 @@ library
                          , Foreign.Isl.UnionMap
                          , Foreign.Isl.Flow
                          , Foreign.Isl.Schedule
+                         , Foreign.Isl.AstBuild
     -- other-extensions:
     build-depends:          base >=4.18 && <4.21
     hs-source-dirs:         src
