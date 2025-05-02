@@ -24,12 +24,14 @@ library
                          , Isl.Map
                          , Isl.UnionMap
                          , Isl.Flow
+                         , Isl.Schedule
     other-modules:          Foreign.Isl.Ctx
                          , Foreign.Isl.Set
                          , Foreign.Isl.UnionSet
                          , Foreign.Isl.Map
                          , Foreign.Isl.UnionMap
                          , Foreign.Isl.Flow
+                         , Foreign.Isl.Schedule
     -- other-extensions:
     build-depends:          base >=4.18 && <4.21
     hs-source-dirs:         src

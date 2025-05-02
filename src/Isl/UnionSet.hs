@@ -1,5 +1,5 @@
 module Isl.UnionSet
-  ( UnionSet
+  ( UnionSet(..)
   , readFromStr
   , union
   ) where
