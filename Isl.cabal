@@ -21,9 +21,13 @@ library
     exposed-modules:        Isl.Ctx
                          , Isl.Set
                          , Isl.UnionSet
+                         , Isl.Map
+                         , Isl.UnionMap
     other-modules:          Foreign.Isl.Ctx
                          , Foreign.Isl.Set
                          , Foreign.Isl.UnionSet
+                         , Foreign.Isl.Map
+                         , Foreign.Isl.UnionMap
     -- other-extensions:
     build-depends:          base >=4.18 && <4.21
     hs-source-dirs:         src
