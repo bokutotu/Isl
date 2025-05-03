@@ -1,21 +1,22 @@
 module Isl.Schedule
-  ( ScheduleConstraints(..)
-  , Schedule(..)
-  , constraintsOnDomain
-  , setValidity
-  , computeSchedule
-  ) where
+  ( ScheduleConstraints (..),
+    Schedule (..),
+    constraintsOnDomain,
+    setValidity,
+    computeSchedule,
+  )
+where
 
 import Foreign.Isl.Schedule
-import Isl.UnionSet (UnionSet(..))
-import Isl.UnionMap (UnionMap(..))
+import Isl.UnionMap (UnionMap (..))
+import Isl.UnionSet (UnionSet (..))
 import System.IO.Unsafe (unsafePerformIO)
 
 -- | A safe wrapper around IslScheduleConstraints
-newtype ScheduleConstraints = ScheduleConstraints { unScheduleConstraints :: IslScheduleConstraintsPtr }
+newtype ScheduleConstraints = ScheduleConstraints {unScheduleConstraints :: IslScheduleConstraintsPtr}
 
 -- | A safe wrapper around IslSchedule
-newtype Schedule = Schedule { unSchedule :: IslSchedulePtr }
+newtype Schedule = Schedule {unSchedule :: IslSchedulePtr}
 
 -- | Create schedule constraints on a domain
 constraintsOnDomain :: UnionSet -> Maybe ScheduleConstraints
@@ -30,4 +31,4 @@ setValidity (ScheduleConstraints sc) (UnionMap um) =
 -- | Compute a schedule from constraints
 computeSchedule :: ScheduleConstraints -> Maybe Schedule
 computeSchedule (ScheduleConstraints sc) =
-  Just $ Schedule $ unsafePerformIO $ islScheduleConstraintsComputeSchedule sc 
+  Just $ Schedule $ unsafePerformIO $ islScheduleConstraintsComputeSchedule sc

@@ -13,8 +13,6 @@ module Foreign.Isl.Schedule
   ) where
 
 import Foreign.Ptr
-import Foreign.C.Types
-import Foreign.Isl.Ctx
 import Foreign.Isl.UnionMap
 import Foreign.Isl.UnionSet
 

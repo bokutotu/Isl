@@ -111,3 +111,5 @@ bench.html
 scripts/release/binary-downloads/
 
 dist-newtype/*
+
+*.hsc.hs

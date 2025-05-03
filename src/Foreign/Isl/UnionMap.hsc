@@ -13,7 +13,6 @@ module Foreign.Isl.UnionMap
 
 import Foreign.Ptr
 import Foreign.C.String
-import Foreign.C.Types
 import Foreign.Isl.Ctx
 
 #include <isl/union_map.h>

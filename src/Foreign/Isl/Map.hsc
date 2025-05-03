@@ -13,7 +13,6 @@ module Foreign.Isl.Map
 
 import Foreign.Ptr
 import Foreign.C.String
-import Foreign.C.Types
 import Foreign.Isl.Ctx
 
 #include <isl/map.h>

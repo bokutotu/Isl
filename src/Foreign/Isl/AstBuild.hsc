@@ -12,8 +12,6 @@ module Foreign.Isl.AstBuild
   ) where
 
 import Foreign.Ptr
-import Foreign.C.Types
-import Foreign.Isl.Ctx
 import Foreign.Isl.Schedule
 
 #include <isl/ast_build.h>
