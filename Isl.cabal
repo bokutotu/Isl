@@ -17,26 +17,29 @@ common warnings
     ghc-options: -Wall
 
 library
-    import:                 warnings
-    exposed-modules:        Isl.Ctx
-                         , Isl.Set
-                         , Isl.UnionSet
-                         , Isl.Map
-                         , Isl.UnionMap
-                         , Isl.Flow
-                         , Isl.Schedule
-                         , Isl.AstBuild
-                         , Isl.Val
-    other-modules:          Foreign.Isl.Ctx
-                         , Foreign.Isl.Set
-                         , Foreign.Isl.UnionSet
-                         , Foreign.Isl.Map
-                         , Foreign.Isl.UnionMap
-                         , Foreign.Isl.Flow
-                         , Foreign.Isl.Schedule
-                         , Foreign.Isl.AstBuild
-                         , Foreign.Isl.Val
+    import:                  warnings
+    exposed-modules:         Isl.Ctx
+                           , Isl.Set
+                           , Isl.UnionSet
+                           , Isl.Map
+                           , Isl.UnionMap
+                           , Isl.Flow
+                           , Isl.Schedule
+                           , Isl.AstBuild
+                           , Isl.Val
+                           , Isl.Id
+    other-modules:           Foreign.Isl.Ctx
+                           , Foreign.Isl.Set
+                           , Foreign.Isl.UnionSet
+                           , Foreign.Isl.Map
+                           , Foreign.Isl.UnionMap
+                           , Foreign.Isl.Flow
+                           , Foreign.Isl.Schedule
+                           , Foreign.Isl.AstBuild
+                           , Foreign.Isl.Val
+                           , Foreign.Isl.Id
     -- other-extensions:
+    ghc-options:            -optc-Wno-incompatible-pointer-types-discards-qualifiers
     build-depends:          base >=4.18 && <4.21
     hs-source-dirs:         src
     default-language:       GHC2024
