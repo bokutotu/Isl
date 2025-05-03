@@ -7,11 +7,13 @@ module Foreign.Isl.UnionSet
   , IslUnionSetPtr
   , islUnionSetReadFromStr
   , islUnionSetUnion
+  , islUnionSetFromSet
   ) where
 
 import Foreign.Ptr
 import Foreign.C.String
 import Foreign.Isl.Ctx
+import Foreign.Isl.Set (IslSetPtr)
 
 #include <isl/union_set.h>
 
@@ -29,6 +31,9 @@ foreign import capi "isl/union_set.h isl_union_set_read_from_str" c_isl_union_se
 foreign import capi "isl/union_set.h isl_union_set_union" c_isl_union_set_union
   :: IslUnionSetPtr -> IslUnionSetPtr -> IO IslUnionSetPtr
 
+foreign import capi "isl/union_set.h isl_union_set_from_set" c_isl_union_set_from_set
+  :: IslSetPtr -> IO IslUnionSetPtr
+
 -- Haskell wrappers
 islUnionSetReadFromStr :: IslCtxPtr -> String -> IO IslUnionSetPtr
 islUnionSetReadFromStr ctx str = withCString str $ \cstr ->
@@ -36,3 +41,6 @@ islUnionSetReadFromStr ctx str = withCString str $ \cstr ->
 
 islUnionSetUnion :: IslUnionSetPtr -> IslUnionSetPtr -> IO IslUnionSetPtr
 islUnionSetUnion = c_isl_union_set_union 
+
+islUnionSetFromSet :: IslSetPtr -> IO IslUnionSetPtr
+islUnionSetFromSet = c_isl_union_set_from_set

@@ -8,11 +8,14 @@ module Foreign.Isl.Set
   , islSetReadFromStr
   , islSetCoalesce
   , islSetSamplePoint
+  , islSetFixVal
   ) where
 
 import Foreign.Ptr
 import Foreign.C.String
+import Foreign.C.Types
 import Foreign.Isl.Ctx
+import Foreign.Isl.Val (IslValPtr)
 
 #include <isl/set.h>
 
@@ -34,6 +37,10 @@ foreign import capi "isl/set.h isl_set_coalesce" c_isl_set_coalesce
 foreign import capi "isl/set.h isl_set_sample_point" c_isl_set_sample_point
   :: IslSetPtr -> IO IslSetPtr
 
+foreign import capi "isl/set.h isl_set_fix_val"
+  c_isl_set_fix_val
+    :: IslSetPtr -> CInt -> CUInt -> IslValPtr -> IO IslSetPtr
+
 -- Haskell wrappers
 islSetReadFromStr :: IslCtxPtr -> String -> IO IslSetPtr
 islSetReadFromStr ctx str = withCString str $ \cstr ->
@@ -44,3 +51,12 @@ islSetCoalesce = c_isl_set_coalesce
 
 islSetSamplePoint :: IslSetPtr -> IO IslSetPtr
 islSetSamplePoint = c_isl_set_sample_point 
+
+islSetFixVal
+  :: IslSetPtr
+  -> CInt
+  -> Word
+  -> IslValPtr
+  -> IO IslSetPtr
+islSetFixVal set ty pos v =
+    c_isl_set_fix_val set ty (fromIntegral pos) v

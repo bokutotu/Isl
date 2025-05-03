@@ -28,6 +28,7 @@ library
                            , Isl.AstBuild
                            , Isl.Val
                            , Isl.Id
+                           , Isl.DimType
     other-modules:           Foreign.Isl.Ctx
                            , Foreign.Isl.Set
                            , Foreign.Isl.UnionSet

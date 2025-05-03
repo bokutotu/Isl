@@ -1,14 +1,23 @@
 module Isl.Set
-  ( Set,
-    readFromStr,
-    coalesce,
-    samplePoint,
+  ( Set (..)
+   , readFromStr
+   , coalesce
+   , samplePoint
+   , fixVal
   )
 where
 
-import Foreign.Isl.Set
+import Foreign.Isl.Set ( IslSetPtr
+  , islSetReadFromStr
+  , islSetCoalesce
+  , islSetSamplePoint
+  , islSetFixVal
+  )
+import Foreign.C.Types (CInt)
 import Isl.Ctx (Ctx (..))
+import Isl.Val (Val (..))
 import System.IO.Unsafe (unsafePerformIO)
+import Isl.DimType (DimType, dimTypeToInt)
 
 -- | A safe wrapper around IslSet
 newtype Set = Set IslSetPtr
@@ -27,3 +36,7 @@ coalesce (Set ptr) =
 samplePoint :: Set -> Maybe Set
 samplePoint (Set ptr) =
   Just $ Set $ unsafePerformIO $ islSetSamplePoint ptr
+
+fixVal :: Set -> DimType -> Word -> Val -> Maybe Set
+fixVal (Set p) ty i v =
+  Just . Set $ unsafePerformIO (islSetFixVal p (fromIntegral (dimTypeToInt ty) :: CInt) i (unVal v))
