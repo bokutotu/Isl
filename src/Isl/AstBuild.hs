@@ -1,18 +1,21 @@
 module Isl.AstBuild
-  ( AstBuild,
-    AstNode,
-    buildFromSchedule,
-    buildSetAtEachDomain,
-    astBuildAlloc,
-    astBuildNodeFromSchedule,
+  ( AstBuild
+  , AstNode
+  , buildFromSchedule
+  , buildSetAtEachDomain
+  , astBuildAlloc
+  , astBuildNodeFromSchedule
+  , printerPrintAstNode
   )
 where
 
 import Foreign.Isl.AstBuild
+import Foreign.Isl.AstBuildTypes
 import Foreign.Ptr (nullPtr)
 import Isl.Ctx (Ctx (..))
 import Isl.Schedule (Schedule (..))
 import System.IO.Unsafe (unsafePerformIO)
+import Isl.Printer (Printer (Printer, unPrinter))
 
 -- | A safe wrapper around IslAstBuild
 newtype AstBuild = AstBuild IslAstBuildPtr
@@ -37,3 +40,7 @@ astBuildAlloc ctx =
 astBuildNodeFromSchedule :: AstBuild -> Schedule -> Maybe AstNode
 astBuildNodeFromSchedule (AstBuild bld) (Schedule sch) =
   Just $ AstNode $ unsafePerformIO $ islAstBuildNodeFromSchedule bld sch
+
+printerPrintAstNode :: Printer -> AstNode -> Maybe Printer
+printerPrintAstNode p (AstNode node) =
+  Just $ Printer $ unsafePerformIO $ islPrinterPrintAstNode ( unPrinter p ) node

@@ -11,11 +11,13 @@ module Foreign.Isl.Schedule
   , islScheduleConstraintsSetValidity
   , islScheduleConstraintsComputeSchedule
   , islScheduleFromDomain
+  , islPrinterPrintSchedule
   ) where
 
 import Foreign.Ptr
 import Foreign.Isl.UnionMap
 import Foreign.Isl.UnionSet
+import Foreign.Isl.PrinterTypes
 
 #include <isl/schedule.h>
 
@@ -43,6 +45,10 @@ foreign import capi "isl/schedule.h isl_schedule_constraints_compute_schedule" c
 
 foreign import capi "isl/schedule.h isl_schedule_from_domain" c_isl_schedule_from_domain
   :: IslUnionSetPtr -> IO IslSchedulePtr
+  
+foreign import capi "isl/schedule.h isl_printer_print_schedule"
+  c_isl_printer_print_schedule
+  :: IslPrinterPtr -> IslSchedulePtr -> IO IslPrinterPtr
 
 -- Haskell wrappers
 islScheduleConstraintsOnDomain :: IslUnionSetPtr -> IO IslScheduleConstraintsPtr
@@ -56,3 +62,8 @@ islScheduleConstraintsComputeSchedule = c_isl_schedule_constraints_compute_sched
 
 islScheduleFromDomain :: IslUnionSetPtr -> IO IslSchedulePtr
 islScheduleFromDomain = c_isl_schedule_from_domain
+
+islPrinterPrintSchedule :: IslPrinterPtr -> IslSchedulePtr -> IO IslPrinterPtr
+islPrinterPrintSchedule = c_isl_printer_print_schedule
+
+

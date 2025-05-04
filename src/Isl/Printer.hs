@@ -12,6 +12,7 @@ where
 
 import Foreign.C.String (peekCString)
 import Foreign.Isl.Printer
+import Foreign.Isl.PrinterTypes
 import Isl.Ctx (Ctx (..))
 import System.IO.Unsafe (unsafePerformIO)
 

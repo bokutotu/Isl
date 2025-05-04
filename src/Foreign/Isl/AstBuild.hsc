@@ -3,32 +3,21 @@
 {-# LANGUAGE EmptyDataDecls #-}
 
 module Foreign.Isl.AstBuild
-  ( IslAstBuild
-  , IslAstBuildPtr
-  , IslAstNode
-  , IslAstNodePtr
-  , islAstBuildFromSchedule
+  ( islAstBuildFromSchedule
   , islAstBuildSetAtEachDomain
   , islAstBuildAlloc
   , islAstBuildNodeFromSchedule
+  , islPrinterPrintAstNode
   ) where
 
 import Foreign.Ptr
 import Foreign.Isl.Schedule
 import Foreign.Isl.Ctx
+import Foreign.Isl.PrinterTypes
+import Foreign.Isl.AstBuildTypes
 
 #include <isl/ast_build.h>
 #include <isl/ast.h>
-
--- | The ISL ast build structure
-data IslAstBuild
-
-type IslAstBuildPtr = Ptr IslAstBuild
-
--- | The ISL ast node structure
-data IslAstNode
-
-type IslAstNodePtr = Ptr IslAstNode
 
 -- | Build an AST from a schedule (correct function name)
 foreign import capi "isl/ast_build.h isl_ast_build_ast_from_schedule" c_isl_ast_build_ast_from_schedule
@@ -44,6 +33,9 @@ foreign import capi "isl/ast_build.h isl_ast_build_alloc" c_isl_ast_build_alloc
 foreign import capi "isl/ast_build.h isl_ast_build_node_from_schedule" c_isl_ast_build_node_from_schedule
   :: IslAstBuildPtr -> IslSchedulePtr -> IO IslAstNodePtr
 
+foreign import capi "isl/ast.h isl_printer_print_ast_node" c_isl_printer_print_ast_node
+  :: IslPrinterPtr -> IslAstNodePtr -> IO IslPrinterPtr
+
 -- Haskell wrappers
 islAstBuildFromSchedule :: IslAstBuildPtr -> IslSchedulePtr -> IO IslAstNodePtr
 islAstBuildFromSchedule = c_isl_ast_build_ast_from_schedule
@@ -56,3 +48,6 @@ islAstBuildAlloc = c_isl_ast_build_alloc
 
 islAstBuildNodeFromSchedule :: IslAstBuildPtr -> IslSchedulePtr -> IO IslAstNodePtr
 islAstBuildNodeFromSchedule = c_isl_ast_build_node_from_schedule
+
+islPrinterPrintAstNode :: IslPrinterPtr -> IslAstNodePtr -> IO IslPrinterPtr
+islPrinterPrintAstNode = c_isl_printer_print_ast_node
