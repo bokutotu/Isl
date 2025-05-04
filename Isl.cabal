@@ -1,13 +1,13 @@
 cabal-version:      3.14
 name:               Isl
 version:            0.0.0.1
--- synopsis:
--- description:
+synopsis:           Haskell bindings for the ISL library
+description:        Haskell bindings for the ISL library
 license:            BSD-3-Clause
 license-file:       LICENSE
 author:             bokutotu
 maintainer:         mushin.hudoushin@gmail.com
--- copyright:
+copyright:          2025 bokutotu
 category:           ffi
 build-type:         Simple
 extra-doc-files:    CHANGELOG.md
