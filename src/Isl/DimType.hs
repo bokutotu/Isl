@@ -4,17 +4,20 @@ module Isl.DimType
   )
 where
 
-data DimType
-  = DimIn
-  | DimOut
-  | DimSet
-  | DimDiv
-  | DimCst
+data DimType = DimCst
+             | DimParam
+             | DimIn
+             | DimOut
+             | DimSet
+             | DimDiv
+             | DimAll
   deriving (Eq, Ord, Show)
 
 dimTypeToInt :: DimType -> Int
-dimTypeToInt DimIn = 0
-dimTypeToInt DimOut = 1
-dimTypeToInt DimSet = 2
-dimTypeToInt DimDiv = 3
-dimTypeToInt DimCst = 4
+dimTypeToInt DimCst   = 0
+dimTypeToInt DimParam = 1
+dimTypeToInt DimIn    = 2
+dimTypeToInt DimOut   = 3
+dimTypeToInt DimSet   = 3
+dimTypeToInt DimDiv   = 4
+dimTypeToInt DimAll   = 5

@@ -41,3 +41,4 @@ samplePoint (Set ptr) =
 fixVal :: Set -> DimType -> Word -> Val -> Maybe Set
 fixVal (Set p) ty i v =
   Just . Set $ unsafePerformIO (islSetFixVal p (fromIntegral (dimTypeToInt ty) :: CInt) i (unVal v))
+{-# NOINLINE fixVal #-}

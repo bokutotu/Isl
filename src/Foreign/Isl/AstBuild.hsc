@@ -15,13 +15,14 @@ import Foreign.Isl.Schedule
 import Foreign.Isl.Ctx
 import Foreign.Isl.PrinterTypes
 import Foreign.Isl.AstBuildTypes
+import Foreign.Isl.UnionMap
 
 #include <isl/ast_build.h>
 #include <isl/ast.h>
 
 -- | Build an AST from a schedule (correct function name)
 foreign import capi "isl/ast_build.h isl_ast_build_ast_from_schedule" c_isl_ast_build_ast_from_schedule
-  :: IslAstBuildPtr -> IslSchedulePtr -> IO IslAstNodePtr
+  :: IslAstBuildPtr -> IslUnionMapPtr -> IO IslAstNodePtr
 
 -- | Set a callback at each domain (stub: callback not supported in this binding)
 foreign import capi "isl/ast_build.h isl_ast_build_set_at_each_domain" c_isl_ast_build_set_at_each_domain
@@ -37,7 +38,7 @@ foreign import capi "isl/ast.h isl_printer_print_ast_node" c_isl_printer_print_a
   :: IslPrinterPtr -> IslAstNodePtr -> IO IslPrinterPtr
 
 -- Haskell wrappers
-islAstBuildFromSchedule :: IslAstBuildPtr -> IslSchedulePtr -> IO IslAstNodePtr
+islAstBuildFromSchedule :: IslAstBuildPtr -> IslUnionMapPtr -> IO IslAstNodePtr
 islAstBuildFromSchedule = c_isl_ast_build_ast_from_schedule
 
 islAstBuildSetAtEachDomain :: IslAstBuildPtr -> Ptr () -> Ptr () -> IO IslAstBuildPtr

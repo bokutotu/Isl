@@ -1,38 +1,34 @@
-import Isl.AstBuild (astBuildAlloc, buildFromSchedule)
-import Isl.Ctx (newCtx)
-import Isl.Set (readFromStr, fixVal)
+{-# LANGUAGE OverloadedStrings #-}
+
+import Isl.Ctx      (newCtx)
+import Isl.Set      (readFromStr)
 import Isl.Schedule (scheduleFromDomain)
 import Isl.UnionSet (unionSetFromSet)
-import Isl.Val (intFromSi)
-import Isl.DimType (DimType (..))
-import Isl.Printer (toStrPrinter, setOutputFormat, getStr, OutFromat (..))
+import Isl.Printer  (toStrPrinter, setOutputFormat, getStr, OutFromat(..) )
+import Isl.AstBuild (astBuildAlloc, astBuildNodeFromSchedule, printerPrintAstNode)
 
 orFail :: String -> Maybe a -> IO a
 orFail msg = maybe (fail msg) pure
+infixl 1 ??
 
 (??) :: Maybe a -> String -> IO a
 m ?? msg = orFail msg m
-infixl 1 ??
 
 main :: IO ()
 main = do
-  ctx     <- newCtx ?? "ISL context の生成に失敗しました"
-  domain0 <- readFromStr ctx "[n] -> { S[i] : 0 <= i < n }"
-              ?? "ISL domain の生成に失敗しました"
-  nVal    <- intFromSi ctx 5 ?? "ISL Val の生成に失敗しました"
-  domain1 <- fixVal domain0 DimIn 0 nVal
-              ?? "ISL domain の生成に失敗しました"
+  ctx    <- newCtx ?? "ctx 生成失敗"
+  domain <- readFromStr ctx "{ S[i] : 0 <= i < 5 }"
+              ?? "domain 生成失敗"
 
-  let domainUs = unionSetFromSet domain1
-  schedule <- scheduleFromDomain domainUs
-              ?? "ISL schedule の生成に失敗しました"
-
+  let domainUs = unionSetFromSet domain
+  schedule <- scheduleFromDomain domainUs ?? "schedule 生成失敗"
   let astBuild = astBuildAlloc ctx
-  root <- buildFromSchedule astBuild schedule
-            ?? "ISL AST の生成に失敗しました"
+  root     <- astBuildNodeFromSchedule astBuild schedule
+                ?? "AST 生成失敗"
 
   let printer0 = toStrPrinter ctx
   let printer1 = setOutputFormat printer0 C
-  let str = getStr printer1
+  printer2 <- printerPrintAstNode printer1 root
+                ?? "印字失敗"
+  putStrLn $ getStr printer2
 
-  putStrLn str
