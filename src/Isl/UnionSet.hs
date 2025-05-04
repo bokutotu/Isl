@@ -1,8 +1,8 @@
 module Isl.UnionSet
-  ( UnionSet (..)
-  , readFromStr
-  , union
-  , unionSetFromSet
+  ( UnionSet (..),
+    readFromStr,
+    union,
+    unionSetFromSet,
   )
 where
 

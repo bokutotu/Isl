@@ -1,10 +1,10 @@
 module Isl.Schedule
-  ( ScheduleConstraints (..)
-  , Schedule (..)
-  , constraintsOnDomain
-  , setValidity
-  , computeSchedule
-  , scheduleFromDomain
+  ( ScheduleConstraints (..),
+    Schedule (..),
+    constraintsOnDomain,
+    setValidity,
+    computeSchedule,
+    scheduleFromDomain,
   )
 where
 

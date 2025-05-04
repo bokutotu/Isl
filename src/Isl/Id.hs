@@ -1,26 +1,28 @@
 module Isl.Id
-  ( Id(..)
-  , alloc
-  , copy
-  , getName
-  , getHash
-  , toStr
-  , readFromStr
-  , dump
-  , MultiId(..)
-  , multiIdReadFromStr
-  , multiIdToStr
-  , multiIdDump
-  ) where
+  ( Id (..),
+    alloc,
+    copy,
+    getName,
+    getHash,
+    toStr,
+    readFromStr,
+    dump,
+    MultiId (..),
+    multiIdReadFromStr,
+    multiIdToStr,
+    multiIdDump,
+  )
+where
 
-import Foreign.Isl.Id
-import Isl.Ctx (Ctx(..))
-import System.IO.Unsafe (unsafePerformIO)
 import Foreign.C.String (peekCString)
+import Foreign.Isl.Id
 import Foreign.Ptr (nullPtr)
+import Isl.Ctx (Ctx (..))
+import System.IO.Unsafe (unsafePerformIO)
 
-newtype Id = Id { unId :: IslIdPtr }
-newtype MultiId = MultiId { unMultiId :: IslMultiIdPtr }
+newtype Id = Id {unId :: IslIdPtr}
+
+newtype MultiId = MultiId {unMultiId :: IslMultiIdPtr}
 
 alloc :: Ctx -> String -> Id
 alloc (Ctx ctx) name = Id $ unsafePerformIO $ islIdAlloc ctx name nullPtr
@@ -50,4 +52,4 @@ multiIdToStr :: MultiId -> String
 multiIdToStr (MultiId ptr) = unsafePerformIO $ islMultiIdToStr ptr >>= peekCString
 
 multiIdDump :: MultiId -> IO ()
-multiIdDump (MultiId ptr) = islMultiIdDump ptr 
+multiIdDump (MultiId ptr) = islMultiIdDump ptr

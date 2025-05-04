@@ -28,8 +28,9 @@ library
                            , Isl.AstBuild
                            , Isl.Val
                            , Isl.Id
-                           , Isl.DimType
-    other-modules:           Foreign.Isl.Ctx
+                           , Isl.Printer
+    other-modules:           Isl.DimType
+                           , Foreign.Isl.Ctx
                            , Foreign.Isl.Set
                            , Foreign.Isl.UnionSet
                            , Foreign.Isl.Map
@@ -39,6 +40,7 @@ library
                            , Foreign.Isl.AstBuild
                            , Foreign.Isl.Val
                            , Foreign.Isl.Id
+                           , Foreign.Isl.Printer
     -- other-extensions:
     ghc-options:            -optc-Wno-incompatible-pointer-types-discards-qualifiers
     build-depends:          base >=4.18 && <4.21
