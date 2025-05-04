@@ -10,6 +10,7 @@ module Foreign.Isl.Schedule
   , islScheduleConstraintsOnDomain
   , islScheduleConstraintsSetValidity
   , islScheduleConstraintsComputeSchedule
+  , islScheduleFromDomain
   ) where
 
 import Foreign.Ptr
@@ -40,6 +41,9 @@ foreign import capi "isl/schedule.h isl_schedule_constraints_set_validity" c_isl
 foreign import capi "isl/schedule.h isl_schedule_constraints_compute_schedule" c_isl_schedule_constraints_compute_schedule
   :: IslScheduleConstraintsPtr -> IO IslSchedulePtr
 
+foreign import capi "isl/schedule.h isl_schedule_from_domain" c_isl_schedule_from_domain
+  :: IslUnionSetPtr -> IO IslSchedulePtr
+
 -- Haskell wrappers
 islScheduleConstraintsOnDomain :: IslUnionSetPtr -> IO IslScheduleConstraintsPtr
 islScheduleConstraintsOnDomain = c_isl_schedule_constraints_on_domain
@@ -49,3 +53,6 @@ islScheduleConstraintsSetValidity = c_isl_schedule_constraints_set_validity
 
 islScheduleConstraintsComputeSchedule :: IslScheduleConstraintsPtr -> IO IslSchedulePtr
 islScheduleConstraintsComputeSchedule = c_isl_schedule_constraints_compute_schedule 
+
+islScheduleFromDomain :: IslUnionSetPtr -> IO IslSchedulePtr
+islScheduleFromDomain = c_isl_schedule_from_domain

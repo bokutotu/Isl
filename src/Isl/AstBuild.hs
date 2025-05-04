@@ -1,8 +1,10 @@
 module Isl.AstBuild
-  ( AstBuild,
-    AstNode,
-    buildFromSchedule,
-    buildSetAtEachDomain,
+  ( AstBuild
+  , AstNode
+  , buildFromSchedule
+  , buildSetAtEachDomain
+  , astBuildAlloc
+  , astBuildNodeFromSchedule
   )
 where
 
@@ -10,6 +12,7 @@ import Foreign.Isl.AstBuild
 import Foreign.Ptr (nullPtr)
 import Isl.Schedule (Schedule (..))
 import System.IO.Unsafe (unsafePerformIO)
+import Isl.Ctx (Ctx (..))
 
 -- | A safe wrapper around IslAstBuild
 newtype AstBuild = AstBuild IslAstBuildPtr
@@ -26,3 +29,11 @@ buildFromSchedule (AstBuild bld) (Schedule sch) =
 buildSetAtEachDomain :: AstBuild -> AstBuild
 buildSetAtEachDomain (AstBuild bld) =
   AstBuild $ unsafePerformIO $ islAstBuildSetAtEachDomain bld nullPtr nullPtr
+
+astBuildAlloc :: Ctx -> AstBuild
+astBuildAlloc ctx =
+  AstBuild $ unsafePerformIO $ islAstBuildAlloc $ unCtx ctx 
+
+astBuildNodeFromSchedule :: AstBuild -> Schedule -> Maybe AstNode
+astBuildNodeFromSchedule (AstBuild bld) (Schedule sch) =
+  Just $ AstNode $ unsafePerformIO $ islAstBuildNodeFromSchedule bld sch

@@ -1,9 +1,10 @@
 module Isl.Schedule
-  ( ScheduleConstraints (..),
-    Schedule (..),
-    constraintsOnDomain,
-    setValidity,
-    computeSchedule,
+  ( ScheduleConstraints (..)
+  , Schedule (..)
+  , constraintsOnDomain
+  , setValidity
+  , computeSchedule
+  , scheduleFromDomain
   )
 where
 
@@ -32,3 +33,7 @@ setValidity (ScheduleConstraints sc) (UnionMap um) =
 computeSchedule :: ScheduleConstraints -> Maybe Schedule
 computeSchedule (ScheduleConstraints sc) =
   Just $ Schedule $ unsafePerformIO $ islScheduleConstraintsComputeSchedule sc
+
+scheduleFromDomain :: UnionSet -> Maybe Schedule
+scheduleFromDomain (UnionSet ptr) =
+  Just $ Schedule $ unsafePerformIO $ islScheduleFromDomain ptr
